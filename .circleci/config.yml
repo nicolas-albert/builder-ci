@@ -28,5 +28,8 @@ workflows:
     triggers:
     - schedule:
         cron: "0 0 * * *"
-  jobs:
-  - build
+    jobs:
+    - build
+  all:
+    jobs:
+    - build
