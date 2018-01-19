@@ -1,0 +1,16 @@
+FROM circleci/openjdk:8-jdk
+MAINTAINER Nicolas Albert nicolasa@convertigo.com
+
+USER root
+
+RUN apt-get update && apt-get install -y \
+  p7zip-full \
+  awscli \
+  && sudo rm -rf /var/lib/apt/lists/*
+
+RUN wget -q http://7-zip.org/a/7z1604.msi http://7-zip.org/a/7z1604-x64.msi && \
+  7z x 7z1604.msi _7zCon.sfx -so > /usr/lib/p7zip/7zConWin32.sfx && \
+  7z x 7z1604-x64.msi _7zCon.sfx -so > /usr/lib/p7zip/7zConWin64.sfx && \
+  rm *.msi
+
+USER circleci

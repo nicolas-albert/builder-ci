@@ -1,0 +1,34 @@
+FROM openjdk:8-alpine
+MAINTAINER Nicolas Albert nicolasa@convertigo.com
+
+RUN apk add --no-cache \
+  docker \
+  git \
+  gzip \
+  less \
+  maven \
+  nano \
+  openssh-client \
+  p7zip \
+  python2 \
+  tar \
+  sudo
+
+RUN wget -q http://7-zip.org/a/7z1604.msi http://7-zip.org/a/7z1604-x64.msi && \
+  7z x 7z1604.msi _7zCon.sfx -so > /usr/lib/p7zip/7zConWin32.sfx && \
+  7z x 7z1604-x64.msi _7zCon.sfx -so > /usr/lib/p7zip/7zConWin64.sfx && \
+  rm *.msi
+  
+RUN apk add --no-cache py2-pip && pip install awscli docker-compose && apk del py2-pip
+
+RUN wget https://services.gradle.org/distributions/$(wget https://services.gradle.org/distributions/ -qO - | sed -n "s/.*\(gradle-\d\+\.\d\+\(\.\d\+\)\?-bin\.zip\).*/\1/p" | head -n 1) && \
+  mkdir /opt && \
+  unzip *.zip -d /opt && \
+  mv $(cd /opt/gradle*;pwd) /opt/gradle && \
+  rm *.zip
+
+ENV PATH=$PATH:/opt/gradle/bin
+
+RUN adduser -D circleci && addgroup circleci docker && echo "%docker ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/docker
+USER circleci
+WORKDIR /home/circleci
