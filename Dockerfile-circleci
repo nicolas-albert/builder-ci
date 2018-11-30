@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y \
   p7zip-full \
   awscli \
   nsis \
+  osslsigncode \
   && sudo rm -rf /var/lib/apt/lists/*
 
 RUN wget -q http://7-zip.org/a/7z1604.msi http://7-zip.org/a/7z1604-x64.msi && \

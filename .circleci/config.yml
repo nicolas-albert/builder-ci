@@ -3,7 +3,7 @@ jobs:
   build:
     environment:
     - IMAGE_NAME: "convertigo/builder-ci"
-    - IMAGE_VERSION: "2"
+    - IMAGE_VERSION: "3"
     docker:
     - image: docker:latest
     working_directory: /mnt
@@ -17,7 +17,7 @@ jobs:
         docker build --rm=false -f Dockerfile-circleci -t $IMAGE_NAME:circleci .
         docker tag $IMAGE_NAME:circleci $IMAGE_NAME:circleci-$IMAGE_VERSION
     - run: |
-        docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+        echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin
         docker push $IMAGE_NAME:alpine
         docker push $IMAGE_NAME:alpine-$IMAGE_VERSION
         docker push $IMAGE_NAME:circleci
