@@ -3,25 +3,25 @@ jobs:
   build:
     environment:
     - IMAGE_NAME: "convertigo/builder-ci"
-    - IMAGE_VERSION: "3"
+    - IMAGE_VERSION: "4"
     docker:
     - image: docker:latest
     working_directory: /mnt
     steps:
     - checkout
     - setup_remote_docker
-    - run: |
-        docker build --rm=false -f Dockerfile-alpine -t $IMAGE_NAME:alpine .
-        docker tag $IMAGE_NAME:alpine $IMAGE_NAME:alpine-$IMAGE_VERSION
+#    - run: |
+#        docker build --rm=false -f Dockerfile-alpine -t $IMAGE_NAME:alpine .
+#        docker tag $IMAGE_NAME:alpine $IMAGE_NAME:alpine-$IMAGE_VERSION
     - run: |
         docker build --rm=false -f Dockerfile-circleci -t $IMAGE_NAME:circleci .
         docker tag $IMAGE_NAME:circleci $IMAGE_NAME:circleci-$IMAGE_VERSION
     - run: |
         echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" --password-stdin
-        docker push $IMAGE_NAME:alpine
-        docker push $IMAGE_NAME:alpine-$IMAGE_VERSION
         docker push $IMAGE_NAME:circleci
         docker push $IMAGE_NAME:circleci-$IMAGE_VERSION
+#        docker push $IMAGE_NAME:alpine
+#        docker push $IMAGE_NAME:alpine-$IMAGE_VERSION
 workflows:
   version: 2
   nightly:
