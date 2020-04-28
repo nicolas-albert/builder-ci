@@ -1,4 +1,4 @@
-FROM circleci/openjdk:11-stretch
+FROM circleci/openjdk:11-buster
 MAINTAINER Nicolas Albert nicolasa@convertigo.com
 
 USER root
