@@ -6,7 +6,7 @@ jobs:
     - IMAGE_VERSION: "5"
     docker:
     - image: docker:latest
-    working_directory: /mnt
+    working_directory: /home/circleci/repo
     steps:
     - checkout
     - setup_remote_docker
