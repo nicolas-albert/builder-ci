@@ -3,7 +3,7 @@ jobs:
   build:
     environment:
     - IMAGE_NAME: "convertigo/builder-ci"
-    - IMAGE_VERSION: "5"
+    - IMAGE_VERSION: "6"
     docker:
     - image: docker:latest
     working_directory: /home/circleci/repo

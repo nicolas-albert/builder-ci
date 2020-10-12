@@ -1,4 +1,4 @@
-FROM circleci/openjdk:11-buster
+FROM cimg/openjdk:15.0
 MAINTAINER Nicolas Albert nicolasa@convertigo.com
 
 USER root
