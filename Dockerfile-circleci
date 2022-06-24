@@ -1,4 +1,4 @@
-FROM cimg/openjdk:15.0
+FROM cimg/openjdk:17.0
 MAINTAINER Nicolas Albert nicolasa@convertigo.com
 
 USER root
